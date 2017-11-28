@@ -4,22 +4,14 @@
 	<meta charset="utf-8">
 	<title>Neighborhood App | Brent Mercer</title>
 	<link rel="stylesheet" href="css/styles.css">
-	<style>
-	  #map {
-	    height: 100%;
-	  }
-	  html, body {
-	    height: 100%;
-	    margin: 0;
-	    padding: 0;
-	  }
-	</style>
 </head>
 <body>
 
 	<div class="container">
-		<div class="options-box">
-			<h1 data-bind="text: myObservable"></h1>
+		<div class="sidebar">
+			<h1>Results</h1>
+			<ul data-bind="text: myObservable">
+			</ul>
 		</div>
 	</div>
 
