@@ -14,7 +14,6 @@ let locations = [
 
 let map;
 let largeInfoWindow;
-let marker;
 let markers = [];
 let bounds;
 let service;
@@ -29,47 +28,53 @@ function initMap() {
 	largeInfoWindow = new google.maps.InfoWindow();
 
 	createMarkersForPlace();
-	showListings();
 }
 
 
-function showListings() {
+
+// Create array of marker objects for each item in location array
+function createMarkersForPlace() {
 	bounds = new google.maps.LatLngBounds();
-	// Extend the boundaries of the map for each marker and display the marker
-	for (let i = 0; i < markers.length; i++) {
-		markers[i].setMap(map);
-		bounds.extend(markers[i].position);
+	for (let i = 0; i < locations.length; i++) {
+		let position = locations[i].location;
+		let title = locations[i].title;
+		const marker = new google.maps.Marker({
+			map: map,
+			position: position,
+			title: title,
+			animation: google.maps.Animation.DROP,
+			id: locations[i].fsID
+		});
+		locations[i].marker = marker;
+		
+		bounds.extend(marker.position);
+		marker.addListener('click', function() {
+			populateInfoWindow(this, largeInfoWindow);
+		});
 	}
 	map.fitBounds(bounds);
 }
 
 
-// Create array of marker objects for each item in location array
-function createMarkersForPlace() {
-	for (let i = 0; i < locations.length; i++) {
-		let position = locations[i].location;
-		let title = locations[i].title;
-		marker = new google.maps.Marker({
-			map: map,
-			position: position,
-			title: title,
-			animation: google.maps.Animation.DROP,
-			id: i
-		});
-		markers.push(marker);
-		marker.addListener('click', function() {
-			populateInfoWindow(this, largeInfoWindow);
-		});
-	}
-}
+
 
 // Populate info into marker window popup
 function populateInfoWindow(marker, infowindow) {
+
+	let self = marker;
+	marker.setAnimation(google.maps.Animation.BOUNCE);
+	setTimeout(function(){ 
+		marker.setAnimation(null); 
+	}, 2200);
+
 	// Make sure the infowindow isn't already opened on this marker.
 	if (infowindow.marker != marker) {
 		infowindow.setContent('');
 		infowindow.marker = marker;
-		infowindow.setContent('<div>' + marker.title + '</div>');
+		infowindow.setContent('<div>' + self.title + '</div>' +
+		'<div class="content">' + self.street + "</div>" +
+        '<div class="content">' + self.city + "</div>" +
+        '<div class="content">' + self.phone + "</div></div>");
 		// Make sure the marker property is cleared if the infowindow is closed.
 		infowindow.addListener('closeclick',function(){
 			infowindow.setMarker = null;
@@ -78,6 +83,32 @@ function populateInfoWindow(marker, infowindow) {
 	}
 }
 
+
+function mapError() {
+  alert("Map did not load");
+}
+
+
+// // Foursquare API
+// function fourSQ(){
+// 	const clientID = 'Z5WTAAN5CPS2SPIUL2QQ405SOK1PPZ314A2ZVWO5PYNVUF0E';
+// 	const clientSecret = 'OO43DGDQPPP13G5ERTF2WH4IVJ4DTUILZUWVN3OFZPB0XQYX';
+// 	let fsurl = 'https://api.foursquare.com/v2/venues/search?ll=' + this.location.lat + ',' + this.location.long + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20171129' + '&query=' + this.name;
+	
+
+// 	$.ajax(fsurl)
+// 	console.log(fsurl)
+// 	.done(function(data) {
+// 		let phone = data.response.venue.contact.phone;
+// 		this.phone = phone;
+
+// 		//open window
+// 	})
+// 	.fail(function() {
+// 		alert( "Foursquare API error. Please refresh page." );
+// 	})
+
+// }
 
 
 
@@ -89,8 +120,12 @@ function AppViewModel () {
 	console.log(self);
 	console.log(locations);
 
-	this.myObservable = ko.observable("");
-	this.myObservable(locations);
+	this.myObservable = ko.observableArray(locations);
+
+	self.showInfo = function(location) {
+		google.maps.event.trigger(location.marker,'click');
+	}
+
 }
 
 let appViewModel = new AppViewModel();
