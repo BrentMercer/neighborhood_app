@@ -4,7 +4,7 @@
 // MODEL
 let locations = [
 	{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3'},
-	{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3' },
+	{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3'},
 	{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d'},
 	{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef'},
 	{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3'},
@@ -66,7 +66,6 @@ function createMarkersForPlace() {
 
 	}
 	map.fitBounds(bounds);
-
 }
 
 // Throw error if Google Maps api fails to load
@@ -139,6 +138,11 @@ function fourSQ(marker, infowindow){
 }
 
 
+// // Filter locations
+// function filterMarkers(locations) {
+
+// }
+
 
 
 
@@ -146,7 +150,7 @@ function fourSQ(marker, infowindow){
 function AppViewModel () {
 	var self = this;
 
-	this.myObservable = ko.observableArray(locations);
+	self.myObservable = ko.observableArray(locations);
 
 	self.showInfo = function(location) {
 		google.maps.event.trigger(location.marker,'click');
