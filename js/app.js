@@ -3,13 +3,13 @@
 
 // MODEL
 let locations = [
-	{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }},
-	{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }},
-	{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }},
-	{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }},
-	{title: 'Red Leg Brewing Company', location: { lat: 38.898022, lng: -104.841796 }},
-	{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }},
-	{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }}
+	{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3'},
+	{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3' },
+	{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d'},
+	{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef'},
+	{title: 'Red Leg Brewing Company', location: { lat: 38.898022, lng: -104.841796 }, fsID: 'redlegbrewco'},
+	{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300'},
+	{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4'}
 ]
 
 let map;
@@ -17,6 +17,9 @@ let largeInfoWindow;
 let markers = [];
 let bounds;
 let service;
+let street = '';
+let city = '';
+let phone;
 
 
 function initMap() {
@@ -46,23 +49,20 @@ function createMarkersForPlace() {
 			id: locations[i].fsID
 		});
 		locations[i].marker = marker;
-		
 		bounds.extend(marker.position);
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfoWindow);
 		});
+		markers.push(marker);
 	}
 	map.fitBounds(bounds);
 }
-
-
-
 
 // Populate info into marker window popup
 function populateInfoWindow(marker, infowindow) {
 
 	let self = marker;
-	marker.setAnimation(google.maps.Animation.BOUNCE);
+	self.setAnimation(google.maps.Animation.BOUNCE);
 	setTimeout(function(){ 
 		marker.setAnimation(null); 
 	}, 2200);
@@ -71,6 +71,8 @@ function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker != marker) {
 		infowindow.setContent('');
 		infowindow.marker = marker;
+		console.log(marker);
+		fourSQ(marker);
 		infowindow.setContent('<div>' + self.title + '</div>' +
 		'<div class="content">' + self.street + "</div>" +
         '<div class="content">' + self.city + "</div>" +
@@ -89,26 +91,22 @@ function mapError() {
 }
 
 
-// // Foursquare API
-// function fourSQ(){
-// 	const clientID = 'Z5WTAAN5CPS2SPIUL2QQ405SOK1PPZ314A2ZVWO5PYNVUF0E';
-// 	const clientSecret = 'OO43DGDQPPP13G5ERTF2WH4IVJ4DTUILZUWVN3OFZPB0XQYX';
-// 	let fsurl = 'https://api.foursquare.com/v2/venues/search?ll=' + this.location.lat + ',' + this.location.long + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20171129' + '&query=' + this.name;
-	
+// Foursquare API
+function fourSQ(marker){
+	let fsurl = 'https://api.foursquare.com/v2/venues/' + marker.id + '&client_id=Z5WTAAN5CPS2SPIUL2QQ405SOK1PPZ314A2ZVWO5PYNVUF0E&client_secret=OO43DGDQPPP13G5ERTF2WH4IVJ4DTUILZUWVN3OFZPB0XQYX&v=20171122';
 
-// 	$.ajax(fsurl)
-// 	console.log(fsurl)
-// 	.done(function(data) {
-// 		let phone = data.response.venue.contact.phone;
-// 		this.phone = phone;
+	$.ajax(fsurl)
+	.done(function(data) {
+		let street = data.response.venue.contact.street;
+		let city = data.response.venue.contact.city;
+		let phone = data.response.venue.contact.phone;
+		//open window
+	})
+	.fail(function() {
+		alert( "Foursquare API error. Please refresh page." );
+	})
 
-// 		//open window
-// 	})
-// 	.fail(function() {
-// 		alert( "Foursquare API error. Please refresh page." );
-// 	})
-
-// }
+}
 
 
 
