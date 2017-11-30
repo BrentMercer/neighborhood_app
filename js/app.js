@@ -32,11 +32,10 @@ function initMap() {
 
 	// Grab new infowindow box from Google Maps api.
 	largeInfoWindow = new google.maps.InfoWindow();
-	
+
 	// Run function to create markers.
 	createMarkersForPlace();
 }
-
 
 
 // Create array of marker objects for each item in location array.
@@ -139,9 +138,14 @@ function fourSQ(marker, infowindow){
 
 
 // // Filter locations
-// function filterMarkers(locations) {
-
-// }
+console.log(locations);
+function filter() {
+	for (let i = 0; i < locations.length; i++){
+		if (locations[i].show == false) {
+			locations.splice([i], 1);
+		}
+	}
+}
 
 
 
@@ -155,6 +159,8 @@ function AppViewModel () {
 	self.showInfo = function(location) {
 		google.maps.event.trigger(location.marker,'click');
 	}
+
+
 
 }
 
