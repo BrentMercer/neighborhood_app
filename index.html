@@ -9,7 +9,13 @@
 
 	<div class="container">
 		<div class="sidebar">
-			<h1>Results</h1>
+			<h1>Brewery Results</h1>
+			<button id="all" class="clear-filter">All</button>
+			<button id="good" class="filter">Good</button>
+			<button id="better" class="filter">Better</button>
+			<button id="best" class="filter">Best</button>
+
+			
 			<ul data-bind="foreach: myObservable">
 				<li data-bind="text: title, click: $root.showInfo" ></li>
 			</ul>
@@ -20,11 +26,12 @@
 
 	<!-- <input id="zoom-to-area-text" type="text" placeholder="Zoom to your favorite area">
 	<input id="zoom-to-area" type="button" value="Zoom"> -->
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAS_QclsMADBmroHqjb2Su9XNeagF0q4jY&callback=initMap&libraries=places" async defer onerror="mapError()"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+
 
 </body>
 </html>

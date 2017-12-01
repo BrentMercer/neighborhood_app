@@ -3,13 +3,13 @@
 
 // MODEL
 let locations = [
-	{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3'},
-	{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3'},
-	{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d'},
-	{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef'},
-	{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3'},
-	{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300'},
-	{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4'}
+	{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true, stars: 5},
+	{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true, stars: 5},
+	{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true, stars: 4},
+	{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true, stars: 3},
+	{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true, stars: 3},
+	{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true, stars: 4},
+	{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true, stars: 4}
 ]
 
 let map;
@@ -34,12 +34,13 @@ function initMap() {
 	largeInfoWindow = new google.maps.InfoWindow();
 
 	// Run function to create markers.
-	createMarkersForPlace();
+	createMarkers();
 }
 
 
+
 // Create array of marker objects for each item in location array.
-function createMarkersForPlace() {
+function createMarkers() {
 	bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < locations.length; i++) {
 		let position = locations[i].location;
@@ -52,13 +53,17 @@ function createMarkersForPlace() {
 			id: locations[i].fsID
 		});
 		locations[i].marker = marker;
-		locations[i].show = true;
 		bounds.extend(marker.position);
-		
-		// Listen for click on marker, to populate infowindow
+
+		// Add listener to marker, when clicked populate infowindow
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfoWindow);
 		});
+
+		// Only create markers that are set to visible
+		if (locations[i].visible === false) {
+			marker.setMap(null);
+		}
 
 		// Add marker to markers array
 		markers.push(marker);
@@ -67,10 +72,13 @@ function createMarkersForPlace() {
 	map.fitBounds(bounds);
 }
 
+
+
 // Throw error if Google Maps api fails to load
 function mapError() {
   alert("Map did not load");
 }
+
 
 
 // Populate info into marker window popup
@@ -104,7 +112,10 @@ function populateInfoWindow(marker, infowindow) {
 // Foursquare API
 function fourSQ(marker, infowindow){
 	// Set Foursquare API url 
-	let fsurl = 'https://api.foursquare.com/v2/venues/' + marker.id + '?client_id=Z5WTAAN5CPS2SPIUL2QQ405SOK1PPZ314A2ZVWO5PYNVUF0E&client_secret=OO43DGDQPPP13G5ERTF2WH4IVJ4DTUILZUWVN3OFZPB0XQYX&v=20171122';
+	let fsurl = 'https://api.foursquare.com/v2/venues/' + marker.id + 
+	'?client_id=Z5WTAAN5CPS2SPIUL2QQ405SOK1PPZ314A2ZVWO5PYNVUF0E' +
+	'&client_secret=OO43DGDQPPP13G5ERTF2WH4IVJ4DTUILZUWVN3OFZPB0XQYX' +
+	'&v=20171122';
 	
 	// Run Foursquare Ajax request
 	$.ajax(fsurl)
@@ -137,15 +148,75 @@ function fourSQ(marker, infowindow){
 }
 
 
+
+
+
+
 // // Filter locations
-console.log(locations);
-function filter() {
-	for (let i = 0; i < locations.length; i++){
-		if (locations[i].show == false) {
-			locations.splice([i], 1);
-		}
-	}
-}
+// console.log(locations);
+// function filter() {
+// 	for (let i = 0; i < locations.length; i++){
+// 		if (locations[i].show == false) {
+// 			locations[i].marker.setMap(null);
+// 		}
+// 	}
+// }
+
+// KO creating filtered arrays, as per Sharynne suggestion.
+// computed() and arrayFilter() and compareArrays()
+
+
+
+
+
+$('#all').click(function(){
+	locations = [
+		{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: false},
+		{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: false},
+		{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true},
+		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true},
+		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true},
+		{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true},
+		{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true}
+	]
+});
+
+$('#good').click(function(){
+	locations = [
+		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true},
+		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true},
+	]
+});
+
+$('#better').click(function(){
+	locations = [
+		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true},
+		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true},
+		{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true}
+	]
+});
+
+$('#best').click(function(){
+	locations = [
+		{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: false},
+		{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: false}
+	]
+});
+
+
+
+// $('#good').click(function(locations){
+// 	for(let i = 0; i < locations.length; i++) {
+// 		if (self.stars == 3 || self.stars ==4){
+// 			remove(this);
+// 		}
+// 	}
+// });
+
+// Try making KO update the list using a observable something or another. 
+// Propbably need to read KO documentation to find the correct choice.
+// You'll likely need to rerun the whole marker creation process after a click on filter buttons.
+// Maybe rerun initMap?
 
 
 
@@ -156,12 +227,13 @@ function AppViewModel () {
 
 	self.myObservable = ko.observableArray(locations);
 
-	self.showInfo = function(location) {
-		google.maps.event.trigger(location.marker,'click');
+	// if (self.stars == 3 || self.stars ==4){
+	// 	removeAll( self.stars == 3 )
+	// }
+
+	self.showInfo = function(locations) {
+		google.maps.event.trigger(locations.marker,'click');
 	}
-
-
-
 }
 
 let appViewModel = new AppViewModel();

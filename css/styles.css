@@ -64,3 +64,23 @@ h1 {
 .title {
 	font-size: 2em;
 }
+
+button {
+	font-size: 20px;
+	border-radius: 15px;
+	outline: none;
+}
+
+.filter {
+	width: 30%;
+}
+
+.clear-filter {
+	width: 93%;
+}
+
+button:active{
+    background:lightblue;
+}
+
+
