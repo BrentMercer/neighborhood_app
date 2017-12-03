@@ -19,8 +19,6 @@ let bounds;
 let service;
 
 
-
-
 // Initialize map on page load.
 function initMap() {
 
@@ -36,7 +34,6 @@ function initMap() {
 	// Run function to create markers.
 	createMarkers();
 }
-
 
 
 // Create array of marker objects for each item in location array.
@@ -60,11 +57,6 @@ function createMarkers() {
 			populateInfoWindow(this, largeInfoWindow);
 		});
 
-		// Only create markers that are set to visible
-		if (locations[i].visible === false) {
-			marker.setMap(null);
-		}
-
 		// Add marker to markers array
 		markers.push(marker);
 
@@ -73,12 +65,18 @@ function createMarkers() {
 }
 
 
+// Clear out markers
+function clearMarkers(){
+	for(let i = 0; i < locations.length; i++){
+		locations[i].marker.setMap(null);
+	}
+}
+
 
 // Throw error if Google Maps api fails to load
 function mapError() {
   alert("Map did not load");
 }
-
 
 
 // Populate info into marker window popup
@@ -102,11 +100,9 @@ function populateInfoWindow(marker, infowindow) {
 		// Make sure the marker property is cleared if the infowindow is closed.
 		infowindow.addListener('closeclick',function(){
 			infowindow.setMarker = null;
-		});
-		
+		});		
 	}
 }
-
 
 
 // Foursquare API
@@ -164,90 +160,111 @@ function fourSQ(marker, infowindow){
 
 // KO creating filtered arrays, as per Sharynne suggestion.
 // computed() and arrayFilter() and compareArrays()
-console.log(locations)
-function clearMarkers(){
-	for(let i = 0; i < locations.length; i++){
-		locations[i].marker.setMap(null);
-	}
-}
 
 
 
-$('#all').click(function(){
-	clearMarkers();
-	locations = [
-		{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true},
-		{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true},
-		{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true},
-		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true},
-		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true},
-		{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true},
-		{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true}
-	];
-	createMarkers();
-});
 
-$('#good').click(function(){
-	clearMarkers();
-	locations = [
-		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true},
-		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true},
-	];
-	createMarkers();
-});
-
-$('#better').click(function(){
-	clearMarkers();
-	locations = [
-		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true},
-		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true},
-		{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true}
-	];
-	createMarkers();
-});
-
-$('#best').click(function(){
-	clearMarkers();
-	locations = [
-		{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true},
-		{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true}
-	];
-
-	createMarkers();
-});
-
-
-
-// $('#good').click(function(locations){
-// 	for(let i = 0; i < locations.length; i++) {
-// 		if (self.stars == 3 || self.stars ==4){
-// 			remove(this);
-// 		}
-// 	}
+// $('#all').click(function(){
+// 	clearMarkers();
+// 	locations = [
+// 		{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true, stars: 5},
+// 		{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true, stars: 5},
+// 		{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true, stars: 4},
+// 		{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true, stars: 4},
+// 		{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true, stars: 4},
+// 		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true, stars: 3},
+// 		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true, stars: 3}
+// 	];
+// 	createMarkers();
 // });
 
-// Try making KO update the list using a observable something or another. 
-// Propbably need to read KO documentation to find the correct choice.
-// You'll likely need to rerun the whole marker creation process after a click on filter buttons.
-// Maybe rerun initMap?
+// $('#good').click(function(){
+// 	clearMarkers();
+// 	locations = [
+// 		{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true, stars: 3},
+// 		{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true, stars: 3}
+// 	];
+// 	createMarkers();
+// });
+
+// $('#better').click(function(){
+// 	clearMarkers();
+// 	locations = [
+// 		{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true, stars: 4},
+// 		{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true, stars: 4},
+// 		{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true, stars: 4}
+// 	];
+// 	createMarkers();
+// });
+
+// $('#best').click(function(){
+// 	clearMarkers();
+// 	locations = [
+// 		{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true, stars: 5},
+// 		{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true, stars: 5}
+// 	];
+// 	createMarkers();
+// });
 
 
+// NEXT UP
+// Now that you have a basic idea of how you can update the markers, time to make the app more robust :) 
+// Checkout KO observable's computed() and subscribe() method. 
+// So, instead of directly modifying your locations array, see if you can figure out how to use computed create an observable "filteredArray" and "subscribe" to it to track changes that happen.
+// Then, to update the frontend, you'd want to swap data-bind="foreach: myObservable" to use the filtered array data-bind="foreach: 
+// filteredArray would default to all locations in the beginning and if it changes...
+
+// EXAMPLE FROM SHARYNNE
+// self.filteredArray.subscribe(function() {
+//     var diff = ko.utils.compareArrays(self.locations(), self.filteredArray());
+//     ko.utils.arrayForEach(diff, function(diffItem) {
+//       if (diffItem.status === 'deleted') {
+//         // do something
+//       } else {
+//         // do something else
+//       }
+//     });
+// });
+
+
+// function filterArray() {
+// 	let filteredLocations = [];
+// 	for (let i = 0; i < locations.length; i++){
+// 		if (locations.stars > 1){
+// 			filteredLocations.push(locations[i]);
+// 		}
+// 	}
+// 	console.log(filteredLocations);
+// 	return filteredLocations;
+// }
 
 
 // VIEWMODEL
 function AppViewModel () {
-	var self = this;
+	let self = this;
+	filteredItems: [];
+
+	self.allLocations = ko.computed(function(){
+		ko.utils.arrayForEach(function() {
+			if (self.locations.stars > 1){
+				self.filteredItems.push(locations[i]);
+			}
+		}, self);
+		return self.filteredItems;
+	});
 
 	self.myObservable = ko.observableArray(locations);
 
-	// if (self.stars == 3 || self.stars ==4){
-	// 	removeAll( self.stars == 3 )
-	// }
+	// self.myObservable.subscribe(function(locations) {
+	// 	return locations;
+	// });
 
 	self.showInfo = function(locations) {
 		google.maps.event.trigger(locations.marker,'click');
 	}
+
 }
 
 let appViewModel = new AppViewModel();
 ko.applyBindings(appViewModel);
+
