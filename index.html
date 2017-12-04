@@ -10,10 +10,10 @@
 	<div class="container">
 		<div class="sidebar">
 			<h1>Brewery Results</h1>
-			<button id="all" class="clear-filter" data-binding="click: allLocations">All</button>
-			<button id="good" class="filter">Good</button>
-			<button id="better" class="filter">Better</button>
-			<button id="best" class="filter">Best</button>
+			<button id="all" class="clear-filter" data-binding="click: allButton">All</button>
+			<button id="good" class="filter" data-bind="click: goodButton" >Good</button>
+			<button id="better" class="filter" data-bind="click: betterButton">Better</button>
+			<button id="best" class="filter" data-bind="click: bestButton">Best</button>
 
 			
 			<ul data-bind="foreach: myObservable">

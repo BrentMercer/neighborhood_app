@@ -242,18 +242,62 @@ function fourSQ(marker, infowindow){
 // VIEWMODEL
 function AppViewModel () {
 	let self = this;
-	filteredItems: [];
+	let allLocations = locations;
 
-	self.allLocations = ko.computed(function(){
-		ko.utils.arrayForEach(function() {
-			if (self.locations.stars > 1){
-				self.filteredItems.push(locations[i]);
-			}
-		}, self);
-		return self.filteredItems;
-	});
+	// let filteredItems = [];
+	// allLocations: ko.computed(function(){
+	// 	ko.utils.arrayForEach(function() {
+	// 		if (self.locations.stars > 1){
+	// 			self.filteredItems.push(locations[i]);
+	// 		}
+	// 	}, self);
+	// 	return self.filteredItems;
+	// });
 
 	self.myObservable = ko.observableArray(locations);
+	console.log(self.myObservable)
+
+	self.allButton = function(allLocations) {
+		self.myObservable = [];
+		for(let i = 0; i < allLocations.length; i++){
+			if (allLocations.stars > 1){
+				self.myObservable.push(allLocations[i]);
+			}
+		}
+		return self.myObservable;
+	};
+
+	self.goodButton = function(allLocations) {
+		self.myObservable = [];
+		for(let i = 0; i < allLocations.length; i++){
+			if (allLocations.stars == 3){
+				self.myObservable.push(allLocations[i]);
+			}
+		}
+		return self.myObservable;
+	};
+
+	self.betterButton = function(allLocations) {
+		self.myObservable = [];
+		for(let i = 0; i < allLocations.length; i++){
+			if (allLocations.stars == 4){
+				self.myObservable.push(allLocations[i]);
+			}
+		}
+		return self.myObservable;
+	};
+
+
+	self.bestButton = function(allLocations) {
+		self.myObservable = [];
+		for(let i = 0; i < allLocations.length; i++){
+			if (allLocations.stars == 5){
+				self.myObservable.push(allLocations[i]);
+			}
+		}
+		return self.myObservable;
+	};
+
 
 	// self.myObservable.subscribe(function(locations) {
 	// 	return locations;
