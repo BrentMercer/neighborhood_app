@@ -16,17 +16,16 @@ The app is responsive and should lood great on any screen size.
 
 ## How To Use
 
-1. Click here to try it out: ➡  <http://lastres0rt.github.io/udacity-neighborhood-map-project/> 
-2. Click on any of the places on the map / sidebar for more information
-3. Type in the white bar if you only want to see a few of the places listed on the map to make it easier to spot.
+1. Click here to try it out:  <https://brentmercer.github.io/neighborhood_app/> 
+2. Click on a brewery from the list or a marker on the map for more information.
+3. Click on one of the filter buttons to see good, better, the best, or all the breweries on Colorado Springs.
 
-# Recent Updates
-## Last updated February 9, 2017
-
-Updated with new location of Hacker Dojo (old one has been left intact for historical purposes) 👩🏽‍
-
-# Future Improvements
+## Future Improvements
  
-I'd like to get this set up with Gulp so I can automate adding new locations and make updating this app easier! That'd be awesome.
+Get more CS breweries enetered into the app.
 
-I'd also like to add some new flourishes... this app seems to be getting forked a fair bit, and I'm hoping that's not because of anything that wouldn't be "Udacious"...
+Create back end and interface so users can enter breweries on their own.
+
+Create search filter.
+
+Create logic to organize good, better, best breweries by star rating - maybe rating from Yelp or maybe an aggregate (like Metacritic).
