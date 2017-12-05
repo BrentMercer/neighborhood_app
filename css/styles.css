@@ -9,6 +9,13 @@ body {
 .container {
 	height: 100%;
 	position: relative;
+	background: #fff;
+	border: 1px solid #999;
+	border-radius: 3px;
+	line-height: 35px;
+	padding: 10px 10px 0 10px;
+	text-align: left;
+	width: 340px;
 }
 
 input {
@@ -17,7 +24,7 @@ input {
 
 h1 {
 	color: #525454;
-	font-size: 22px;
+	font-size: 1.8em;
 	margin: 0 0 10px 0;
 	text-align: center;
 }
@@ -27,9 +34,18 @@ h1 {
 	width: 48%;
 }
 
+ul {
+	padding-left: 0;
+	font-size: 1.2em;
+}
 
-#results {
+li {
 	list-style: none;
+	line-height: 1.5em;
+	border: 1px solid #999;
+	border-radius: 15px;
+	padding-left: 35px;
+	margin: 5px 0;
 }
 
 #map {
@@ -46,19 +62,13 @@ h1 {
 	border: 1px solid #999;
 	border-radius: 3px;
 	height: 100%;
-	line-height: 35px;
 	padding: 10px 10px 30px 10px;
 	text-align: left;
 	width: 340px;
 }
 
-.title,
 .content {
-	line-height: 1.5em;
-}
-
-.content {
-	font-size: 1.3em;
+	font-size: 1.2em;
 }
 
 .title {
@@ -67,22 +77,80 @@ h1 {
 
 button {
 	font-size: 20px;
+	line-height: 1.5em;
 	border-radius: 15px;
 	outline: none;
 }
 
+button:hover {
+	cursor: pointer;
+}
+
+button:active {
+	background: lightblue;
+}
+
 .filter {
-	width: 30%;
+	width: 32.3%;
+	margin: 0;
+	padding: 0;
 }
 
 .clear-filter {
-	width: 93%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-button:active{
-    background:lightblue;
+li:hover {
+	cursor: pointer;
+}
+
+li:active{
+	background: lightblue;
 }
 
 a {
 	text-decoration: none;
+}
+
+@media screen and (max-width: 850px) {
+	.container {
+		position: absolute;
+		height: 40%;
+		width: 100%;
+		margin: 450px 0 0 0 ;
+		padding: 0;
+		top: 0;
+		bottom: 0;
+		border: 0;
+	}
+
+	#map {
+		position: fixed;
+		height: 60%;
+		width: 100%;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+	}
+
+	h1 {
+		margin-top: 10px;
+	}
+
+	.filter {
+		width: 32.5%;
+	}
+
+	ul {
+		text-align: center;
+		width: 100%;
+	}
+
+	li {
+		padding: 0;
+		line-height: 1.5em;
+	}
 }

@@ -8,14 +8,13 @@
 <body>
 
 	<div class="container">
-		<div class="sidebar">
-			<h1>Brewery Results</h1>
-			<button id="all" class="clear-filter" data-bind="click: allButton">All</button>
-			<button id="good" class="filter" data-bind="click: goodButton">Good</button>
-			<button id="better" class="filter" data-bind="click: betterButton">Better</button>
-			<button id="best" class="filter" data-bind="click: bestButton">Best</button>
+		<h1>Brewery Results</h1>
+		<button id="all" class="clear-filter" data-bind="click: allButton">All</button>
+		<button id="good" class="filter" data-bind="click: goodButton">Good</button>
+		<button id="better" class="filter" data-bind="click: betterButton">Better</button>
+		<button id="best" class="filter" data-bind="click: bestButton">Best</button>
 
-			
+		<div class="listing-container">
 			<ul data-bind="foreach: myObservable">
 				<li data-bind="text: title, click: $root.showInfo" ></li>
 			</ul>
