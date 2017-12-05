@@ -123,7 +123,12 @@ function fourSQ(marker, infowindow){
 		// Push Foursquare API data to marker object
 		street = data.response.venue.location.address;
 		city = data.response.venue.location.city;
-		phone = data.response.venue.contact.phone;
+		if (data.response.venue.contact.phone) {
+			phone = data.response.venue.contact.phone;
+			phone = phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+		} else {
+			phone = "";
+		}
 
 		// Set Foursquare content to infowindow
 		infowindow.setContent(
