@@ -1,37 +1,31 @@
-## Welcome to GitHub Pages
+# Colorado Springs Neighborhood Micro Brewery App
 
-You can use the [editor on GitHub](https://github.com/BrentMercer/neighborhood_app/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+![Part of the Udacity Front-End Web Development Nanodegree](https://img.shields.io/badge/Udacity-Front--End%20Web%20Developer%20Nanodegree-02b3e4.svg)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+> Developed for the **Udacity Front-End Web Developer Nanodegree**.
 
-### Markdown
+This is the **Udacity Neighborhood Map Project**. It challenges students to create a web application from Google Map API, as well as one additional API. For my project, I chose to include Foursquare's API.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+This app helps users find some of the best micro breweries in Colorado Springs (the ones I've tried anyway), based on my personal favorites.
 
-```markdown
-Syntax highlighted code block
+The app allows users to see a list of good breweries, better breweries, the best breweries, or all the breweries in CS.
 
-# Header 1
-## Header 2
-### Header 3
+Users can see their geographical location on a Google Map and click the location to see additioanl information about the brewery selected.
 
-- Bulleted
-- List
+The app is responsive and should lood great on any screen size.
 
-1. Numbered
-2. List
+## How To Use
 
-**Bold** and _Italic_ and `Code` text
+1. Click here to try it out: ➡  <http://lastres0rt.github.io/udacity-neighborhood-map-project/> 
+2. Click on a brewery from the list or a marker on the map for more information.
+3. Click on one of the filter buttons to see good, better, the best, or all the breweries on Colorado Springs.
 
-[Link](url) and ![Image](src)
-```
+## Future Improvements
+ 
+Get more CS breweries enetered into the app.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Create back end and interface so users can enter breweries on their own.
 
-### Jekyll Themes
+Create search filter.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BrentMercer/neighborhood_app/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Create logic to organize good, better, best breweries by star rating - maybe rating from Yelp or maybe an aggregate (like Metacritic).
