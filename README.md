@@ -16,7 +16,8 @@ The app is responsive and should lood great on any screen size.
 
 ## How To Use
 
-1. Click here to try it out:  <https://brentmercer.github.io/neighborhood_app/> 
+1. Open index.html to try out the app in your browser, or simply click here for a hosted version:
+	<https://brentmercer.github.io/neighborhood_app/> 
 2. Click on a brewery from the list or a marker on the map for more information.
 3. Click on one of the filter buttons to see good, better, the best, or all the breweries on Colorado Springs.
 

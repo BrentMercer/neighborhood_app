@@ -16,7 +16,7 @@
 		<button id="best" class="filter" data-bind="click: bestButton">Best</button>
 
 		<div class="listing-container">
-			<ul data-bind="foreach: myObservable">
+			<ul data-bind="foreach: locationObservable">
 				<li data-bind="text: title, click: $root.showInfo" ></li>
 			</ul>
 		</div>

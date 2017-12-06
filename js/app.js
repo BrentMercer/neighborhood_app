@@ -32,24 +32,24 @@ function initMap() {
 	largeInfoWindow = new google.maps.InfoWindow();
 
 	// Run function to create markers.
-	createMarkers();
+	createMarkers(locations);
 }
 
 
 // Create array of marker objects for each item in location array.
-function createMarkers() {
+function createMarkers(array) {
 	bounds = new google.maps.LatLngBounds();
-	for (let i = 0; i < locations.length; i++) {
-		let position = locations[i].location;
-		let title = locations[i].title;
+	for (let i = 0; i < array.length; i++) {
+		let position = array[i].location;
+		let title = array[i].title;
 		const marker = new google.maps.Marker({
 			map: map,
 			position: position,
 			title: title,
 			animation: google.maps.Animation.DROP,
-			id: locations[i].fsID
+			id: array[i].fsID
 		});
-		locations[i].marker = marker;
+		array[i].marker = marker;
 		bounds.extend(marker.position);
 
 		// Add listener to marker, when clicked populate infowindow
@@ -155,60 +155,67 @@ function AppViewModel () {
 
 	self.allButton = function() {
 		clearMarkers();
-		locations = [
-			{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true, stars: 5},
-			{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true, stars: 5},
-			{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true, stars: 4},
-			{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true, stars: 4},
-			{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true, stars: 4},
-			{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true, stars: 3},
-			{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true, stars: 3}
-		];
-		createMarkers();
+		tempLocs = [];
+		for (let i = 0; i < locations.length; i++){
+			if (locations[i].stars > 1) {
+				tempLocs.push(locations[i]);
+			}
+		}
+
+		createMarkers(tempLocs);
 		
-		self.filteredArray = ko.observableArray(locations);
-		self.myObservable(self.filteredArray());
+		self.filteredArray = ko.observableArray(tempLocs);
+		self.locationObservable(self.filteredArray());
 	};
 
 	self.goodButton = function() {
 		clearMarkers();
-		locations = [
-			{title: 'Fieldhouse Brewing Company', location: { lat: 38.825982, lng: -104.823627 }, fsID: '5390a6b2498e4fea4875bfef', visible: true, stars: 3},
-			{title: 'Trinity Brewing Company', location: { lat: 38.897450, lng: -104.854339 }, fsID: '4b118eadf964a5203c7f23e3', visible: true, stars: 3}
-		];
-		createMarkers();
+
+		tempLocs = [];
+		for (let i = 0; i < locations.length; i++){
+			if (locations[i].stars == 3) {
+				tempLocs.push(locations[i])
+			}
+		}
+
+		createMarkers(tempLocs);
 		
-		self.filteredArray = ko.observableArray(locations);
-		self.myObservable(self.filteredArray());
+		self.filteredArray = ko.observableArray(tempLocs);
+		self.locationObservable(self.filteredArray());
 	};
 
 	self.betterButton = function() {
 		clearMarkers();
-		locations = [
-			{title: 'Cogstone Brewing Company', location: { lat: 38.880052, lng: -104.755481 }, fsID: '56a418f7498eb236c64f6300', visible: true, stars: 4},
-			{title: 'Gold Camp Brewing Company', location: { lat: 38.819571, lng: -104.823610 }, fsID: '54a5ff5e498e3dc75acd6ea4', visible: true, stars: 4},
-			{title: 'Cerberus Brewing Company', location: { lat: 38.833016, lng: -104.837419 }, fsID: '57c878a1498e9ad24cf1158d', visible: true, stars: 4}
-		];
-		createMarkers();
+		tempLocs = [];
+		for (let i = 0; i < locations.length; i++){
+			if (locations[i].stars == 4) {
+				tempLocs.push(locations[i])
+			}
+		}
+
+		createMarkers(tempLocs);
 		
-		self.filteredArray = ko.observableArray(locations);
-		self.myObservable(self.filteredArray());
+		self.filteredArray = ko.observableArray(tempLocs);
+		self.locationObservable(self.filteredArray());
 	};
 
 	self.bestButton = function() {
 		clearMarkers();
-		locations = [
-			{title: 'Bristol Brewing Company', location: { lat: 38.811236, lng: -104.827392 }, fsID: '4af49ef4f964a5206af421e3', visible: true, stars: 5},
-			{title: 'Phantom Canyon', location: { lat: 38.834232, lng: -104.824948 }, fsID: '4ab97703f964a5207e7f20e3', visible: true, stars: 5}
-		];
-		createMarkers();
+		tempLocs = [];
+		for (let i = 0; i < locations.length; i++){
+			if (locations[i].stars == 5) {
+				tempLocs.push(locations[i])
+			}
+		}
+
+		createMarkers(tempLocs);
 		
-		self.filteredArray = ko.observableArray(locations);
-		self.myObservable(self.filteredArray());
+		self.filteredArray = ko.observableArray(tempLocs);
+		self.locationObservable(self.filteredArray());
 	};
 
 
-	self.myObservable = ko.observableArray(locations);
+	self.locationObservable = ko.observableArray(locations);
 
 	self.showInfo = function(locations) {
 		google.maps.event.trigger(locations.marker,'click');
