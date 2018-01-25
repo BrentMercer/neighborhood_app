@@ -1,7 +1,5 @@
 # Colorado Springs Neighborhood Micro Brewery App
 
-![Part of the Udacity Front-End Web Development Nanodegree](https://img.shields.io/badge/Udacity-Front--End%20Web%20Developer%20Nanodegree-02b3e4.svg)
-
 > Developed for the **Udacity Front-End Web Developer Nanodegree**.
 
 This is the **Udacity Neighborhood Map Project**. It challenges students to create a web application from Google Map API, as well as one additional API. For my project, I chose to include Foursquare's API.
